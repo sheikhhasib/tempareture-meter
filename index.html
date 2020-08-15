@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <link rel = "icon" href ="https://i.pinimg.com/originals/77/0b/80/770b805d5c99c7931366c2e84e88f251.png" type = "image/x-icon">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background:  url('picture/bg-image.jpg') no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input type="text" id="inputBox" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button type="button" id="btn" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img src="https://openweathermap.org/img/wn/02d@2x.png" width="100px" alt="">
+            <h1 id="city">Dhaka</h1>
+            <h3><span id="temperature">38.06</span>&deg;C</h3>
+            <h1 class="lead" id="situation">Clouds</h1>
+        </div>
+    </div>
+
+
+    <script>
+        const api = {
+            key: "60c4c10eaf79c22330a855fb59470cc7",
+            base: "https://api.openweathermap.org/data/2.5/"
+        }
+        
+        const search = document.getElementById('btn');
+        search.addEventListener('click',function(){
+            let InputBox = document.getElementById('inputBox');
+            getResults(InputBox.value);
+        });
+        function getResults(query){
+            fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+            .then(res => res.json())
+            .then(displayResults);
+        }
+        function displayResults(weather){
+            let city = document.getElementById('city');
+            city.innerText = weather.name;
+            let temperature = document.getElementById('temperature');
+            temperature.innerText = weather.main.temp;
+            let situation = document.getElementById('situation');
+            situation.innerText = weather.weather[0].main;
+
+            let situationImage = '';
+            if(weather.weather[0].main == 'Haze'){
+                 situationImage = document.getElementsByTagName('img')[0].setAttribute("src", "https://openweathermap.org/img/wn/02d@2x.png");
+            }else if(weather.weather[0].main == 'Rain'){
+                situationImage = document.getElementsByTagName('img')[0].setAttribute("src", "https://icon-library.com/images/raining-icon/raining-icon-1.jpg");
+            }else if(weather.weather[0].main == 'Clouds'){
+                situationImage = document.getElementsByTagName('img')[0].setAttribute("src", "https://cdn1.iconfinder.com/data/icons/weather-458/64/53-512.png");
+            }
+            else if(weather.weather[0].main == 'Winter'){
+                situationImage = document.getElementsByTagName('img')[0].setAttribute("src", "https://i.pinimg.com/originals/a7/e3/2d/a7e32d46f3534528608d88e4a9043721.png");
+            }
+            else if(weather.weather[0].main == 'Drizzle'){
+                situationImage = document.getElementsByTagName('img')[0].setAttribute("src", "https://image.flaticon.com/icons/svg/1113/1113868.svg");
+            }
+        }
+
+    </script>
+</body>
+
+</html>
