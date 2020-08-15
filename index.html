@@ -16,6 +16,14 @@
             background-size: cover;
             height: 100vh;
         }
+        .weather-status{
+            background-image: linear-gradient(rgb(18, 18, 238),blue);
+            width: 25%;
+            margin: auto;
+            padding: 20px 0px 20px 0px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px rgb(177, 177, 250);
+        }
     </style>
 </head>
 
@@ -75,6 +83,20 @@
             }
             else if(weather.weather[0].main == 'Drizzle'){
                 situationImage = document.getElementsByTagName('img')[0].setAttribute("src", "https://image.flaticon.com/icons/svg/1113/1113868.svg");
+            }
+
+            switch(weather.weather[0].main){
+                case'Haze':
+                case 'Clear':
+                    document.body.style.backgroundImage = "url('picture/sunnyday.jpg')";
+                    break;
+                case 'Clouds':
+                    document.body.style.backgroundImage = "url('picture/cloudy.jpg')";
+                    break;
+                case 'rain':
+                case 'Drizzle':
+                    document.body.style.backgroundImage = "url('picture/rainyday.jpg')";
+                    break;
             }
         }
 
